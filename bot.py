@@ -20,7 +20,8 @@ def run_bot():
     Run bot
     '''
     TOKEN = data['token']
-    client = discord.Client()
+    intents = discord.Intents.default()
+    client = discord.Client(intents=intents)
 
     @client.event
     # when bot is started
