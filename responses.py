@@ -1,4 +1,5 @@
-import random
+import random, requests
+MAX_INGREDIENTS = 20
 
 def handle_response(msg):
     p_msg = msg.lower()
@@ -8,7 +9,7 @@ def handle_response(msg):
 
     if p_msg == 'roll':
         return str(random.randint(1,6))
-    
+
     if p_msg == 'help':
         return ("```> Hi There!\n"
                 "I'm a discord bot that will provide you with all the "
@@ -23,3 +24,8 @@ def handle_response(msg):
             return '```?hello\nBot will say greet you back :)```'
         elif p_msg == 'roll':
              return '```?roll\nBot will return a number between 1 and 6.```'
+        elif p_msg == 'random':
+            return ('```?random\n'
+                    'Returns information on a random meal.```')
+    return
+    

@@ -1,6 +1,7 @@
 import discord
 import responses
 import json
+import mealDB
 
 with open('config.json') as f:
     data = json.load(f)
@@ -11,7 +12,8 @@ async def send_message(message, user_message, is_private):
     '''
     try:
         response = responses.handle_response(user_message)
-        await message.author.send(response) if is_private else await message.channel.send(response)
+        if response:
+            await message.author.send(response) if is_private else await message.channel.send(response)
     except Exception as e:
         print(e)
         return 
@@ -44,6 +46,13 @@ def run_bot():
         # log user message
         print(f'{username} said: "{user_message}" ({channel})')
 
+        # meal API commands
+        if user_message == '?random' or user_message == '?r':
+            await mealDB.random_meal(message)
+        if user_message.startswith('?search ') or user_message.startswith('?s '):
+            await mealDB.search_meal(message)
+
+        # user help commands
         if user_message == '?help':
             user_message = user_message[1:]
             # send to channel 
@@ -56,8 +65,6 @@ def run_bot():
             # command
             user_message = user_message[1:]
             await send_message(message, user_message, is_private=False)
-        else:
-            return
 
     client.run(TOKEN)
 
