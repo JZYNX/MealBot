@@ -49,12 +49,13 @@ def run_bot():
         # meal API commands
         if user_message == '?random' or user_message == '?r':
             await mealDB.random_meal(message)
-        if user_message.startswith('?search ') or user_message.startswith('?s '):
+        if user_message.startswith('?search') or user_message.startswith('?s'):
             await mealDB.search_meal(message)
+        if user_message.startswith('?category') or user_message.startswith('?c'):
+            await mealDB.get_meals_by_category(message)
 
         # user help commands
         if user_message == '?help':
-            user_message = user_message[1:]
             # send to channel 
             await channel.send('Check out your direct messages for a list of commands!')
             # send to user's DM
@@ -63,7 +64,6 @@ def run_bot():
             await send_message(message, user_message, is_private=False)
         elif user_message.startswith('?') and len(user_message) > 1:
             # command
-            user_message = user_message[1:]
             await send_message(message, user_message, is_private=False)
 
     client.run(TOKEN)
