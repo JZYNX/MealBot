@@ -14,9 +14,15 @@ def handle_response(msg):
         return ("```> Hi There!\n"
                 "I'm a discord bot that will provide you with all the "
                 "culinary knowledge you need to be a michelin chef!\n"
-                "Do ?help <command> for extend information on a command.\n"
+                "Do ?help <command> for extended information on a command.\n"
                 "Basic functions\n"
-                "?hello, ?roll```")
+                "\t?hello, ?roll\n"
+                "API functions\n"
+                "\t?random, ?search, ?category\n"
+                "Database functions\n"
+                "\t?favourites\n"
+                "```")
+    
 
     if p_msg.startswith('?help '):
         p_msg = p_msg[6:]

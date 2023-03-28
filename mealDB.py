@@ -74,3 +74,4 @@ async def get_meals_by_category(msg):
     
     # display names of meals for category
     await msg.channel.send(f"```{[meal['strMeal'] for meal in data]}```")
+
