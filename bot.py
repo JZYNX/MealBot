@@ -28,6 +28,28 @@ def run_bot():
     async def on_ready():
         print(f'{client.user} is now running!')
     
+    @client.event
+    # when bot detects msg
+    async def on_msg(msg):
+        if msg.author == client.user:
+            # avoid bot creating commands
+            return 
+
+        username = str(msg.author)
+        user_msg = str(msg.content)
+        channel = str(msg.channel)
+
+        print(f'{username} said: "{user_msg}" ({channel})')
+
+        # prefix command for private msg
+        if user_msg[0] == '?':
+            user_msg = user_msg[1:]
+            await send_msg(msg, user_msg, is_private=True)
+        else:
+            await send_msg(msg, user_msg, is_private=False)
+
+
+    
     client.run(TOKEN)
 
 
