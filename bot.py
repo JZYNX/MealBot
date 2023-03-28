@@ -14,6 +14,7 @@ async def send_message(message, user_message, is_private):
         await message.author.send(response) if is_private else await message.channel.send(response)
     except Exception as e:
         print(e)
+        return 
 
 def run_bot():
     '''
@@ -37,17 +38,26 @@ def run_bot():
             return 
 
         username = message.author
-        user_message = message.clean_content
+        user_message = message.content
         channel = message.channel
 
+        # log user message
         print(f'{username} said: "{user_message}" ({channel})')
 
-        # prefix command for private message
-        if user_message[0] == '?':
+        if user_message == '?help':
             user_message = user_message[1:]
+            # send to channel 
+            await channel.send('Check out your direct messages for a list of commands!')
+            # send to user's DM
             await send_message(message, user_message, is_private=True)
-        else:
+        elif user_message.startswith('?help '):
             await send_message(message, user_message, is_private=False)
+        elif user_message.startswith('?') and len(user_message) > 1:
+            # command
+            user_message = user_message[1:]
+            await send_message(message, user_message, is_private=False)
+        else:
+            return
 
     client.run(TOKEN)
 
